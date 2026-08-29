@@ -1,0 +1,12 @@
+{
+  "name": "@citymind/game-engine",
+  "version": "1.0.0",
+  "description": "Core game engine for CITYMIND - world, rendering, input, entities",
+  "main": "src/index.js",
+  "type": "module",
+  "dependencies": {
+    "@citymind/constants": "*",
+    "@citymind/utilities": "*"
+  },
+  "license": "UNLICENSED"
+}
