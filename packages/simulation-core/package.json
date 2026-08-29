@@ -1,0 +1,13 @@
+{
+  "name": "@citymind/simulation-core",
+  "version": "1.0.0",
+  "description": "Core simulation systems for CITYMIND - citizens, economy, buildings, transport, events",
+  "main": "src/index.js",
+  "type": "module",
+  "dependencies": {
+    "@citymind/constants": "*",
+    "@citymind/utilities": "*",
+    "@citymind/game-engine": "*"
+  },
+  "license": "MIT"
+}
