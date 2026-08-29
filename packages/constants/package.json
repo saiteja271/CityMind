@@ -1,0 +1,8 @@
+{
+  "name": "@citymind/constants",
+  "version": "1.0.0",
+  "description": "Shared constants for CITYMIND",
+  "main": "src/index.js",
+  "type": "module",
+  "license": "UNLICENSED"
+}

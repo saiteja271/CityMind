@@ -1,0 +1,37 @@
+{
+  "name": "citymind",
+  "version": "1.0.0",
+  "description": "CITYMIND \u2014 AI-Driven Dynamic City Simulation and Management Platform",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "services/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:api\" \"npm run dev:client\" \"npm run dev:sim\"",
+    "dev:client": "npm run dev --workspace=apps/game-client",
+    "dev:api": "npm run dev --workspace=services/api",
+    "dev:sim": "npm run dev --workspace=services/simulation-service",
+    "build": "npm run build --workspaces --if-present",
+    "test": "jest --config tests/jest.config.js",
+    "test:unit": "jest --config tests/jest.config.js --testPathPattern=unit",
+    "test:integration": "jest --config tests/jest.config.js --testPathPattern=integration",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore",
+    "count-loc": "node scripts/count-loc.js",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "seed": "node scripts/seed-data.js",
+    "validate": "node scripts/validate-project.js"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "eslint": "^8.57.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.2.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "author": "CITYMIND Development Team"
+}

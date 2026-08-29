@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7
+    container_name: citymind-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: citymind
+    restart: unless-stopped
+
+  api:
+    build:
+      context: .
+      dockerfile: infrastructure/Dockerfile.api
+    container_name: citymind-api
+    ports:
+      - "4000:4000"
+    environment:
+      NODE_ENV: development
+      PORT: 4000
+      MONGODB_URI: mongodb://mongodb:27017/citymind
+      JWT_SECRET: citymind_dev_secret_change_in_production
+      JWT_REFRESH_SECRET: citymind_refresh_secret_change_in_production
+    depends_on:
+      - mongodb
+    volumes:
+      - ./services/api:/app/services/api
+      - ./packages:/app/packages
+    restart: unless-stopped
+
+  simulation:
+    build:
+      context: .
+      dockerfile: infrastructure/Dockerfile.simulation
+    container_name: citymind-simulation
+    ports:
+      - "4001:4001"
+    environment:
+      NODE_ENV: development
+      PORT: 4001
+      API_URL: http://api:4000
+    depends_on:
+      - api
+    volumes:
+      - ./services/simulation-service:/app/services/simulation-service
+      - ./packages:/app/packages
+    restart: unless-stopped
+
+  client:
+    build:
+      context: .
+      dockerfile: infrastructure/Dockerfile.client
+    container_name: citymind-client
+    ports:
+      - "3000:3000"
+    environment:
+      REACT_APP_API_URL: http://localhost:4000
+      REACT_APP_WS_URL: ws://localhost:4000
+    depends_on:
+      - api
+    volumes:
+      - ./apps/game-client:/app/apps/game-client
+      - ./packages:/app/packages
+    restart: unless-stopped
+
+volumes:
+  mongo_data:
